@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Checklist</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2em;
+    }
+    label {
+      display: block;
+      margin: 15px 0;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+    input[type="checkbox"] {
+      transform: scale(1.5);
+      margin-right: 10px;
+    }
+    .container {
+      margin-top: 30px;
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const today = new Date().toDateString();
+      if (localStorage.getItem("lastReset") !== today) {
+        localStorage.clear();
+        localStorage.setItem("lastReset", today);
+      }
+
+      const checkboxes = document.querySelectorAll("input[type='checkbox']");
+      checkboxes.forEach((checkbox, index) => {
+        const stored = localStorage.getItem("checkbox" + index);
+        checkbox.checked = stored === "true";
+        checkbox.addEventListener("change", () => {
+          localStorage.setItem("checkbox" + index, checkbox.checked);
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>Daily Checklist</h1>
+  <div class="container">
+    <label><input type="checkbox"> Feed cats breakfast</label>
+    <label><input type="checkbox"> Clean cat box</label>
+    <label><input type="checkbox"> Do dishes</label>
+    <label><input type="checkbox"> Check mail</label>
+    <label><input type="checkbox"> Clean bathroom</label>
+    <label><input type="checkbox"> Feed cats dinner</label>
+  </div>
+</body>
+</html>
